@@ -83,7 +83,7 @@ def getDataObjects(sensor_protocol,PERdict):
                 newpath = mt4_to_mt2(name)
                 if newpath: #Valid madgetech4 file (Converted from xlsx to csv)
                     mts.append(mt2.mt2file(newpath))
-                else:
+                elif sensor_protocol == 'RHT':
                     from hobo import hoboRHT
                     hoborht = hoboRHT(name)
                     if hoborht.valid: #Valid hobo RHT logger file
@@ -102,6 +102,7 @@ def getDataObjects(sensor_protocol,PERdict):
         
         mtdict = dict([(mt.serial,mt) for mt in mts if PERdict[mt.serial][9]!=('','') and PERdict[mt.serial][6]==sensor_protocol])
         keys = sorted(mtdict.keys())
+
         
         return mtdict, keys, hoborhts
         
